@@ -211,6 +211,9 @@ MainWindow::MainWindow(FmPath* path):
     connect(shortcut, &QShortcut::activated, ui.filterBar, &QLineEdit::clear);
   }
 
+  shortcut = new QShortcut(QKeySequence(Qt::Key_Slash), this);
+  connect(shortcut, &QShortcut::activated, this, &MainWindow::on_actionFilter_triggered);
+
   if(path)
     addTab(path);
 
@@ -419,9 +422,8 @@ void MainWindow::on_actionFolderFirst_triggered(bool checked) {
   currentPage()->setSortFolderFirst(checked);
 }
 
-void MainWindow::on_actionFilter_triggered(bool checked) {
-  ui.filterBar->setVisible(checked);
-  static_cast<Application*>(qApp)->settings().setShowFilter(checked);
+void MainWindow::on_actionFilter_triggered() {
+  ui.filterBar->setFocus();
 }
 
 void MainWindow::on_actionComputer_triggered() {
